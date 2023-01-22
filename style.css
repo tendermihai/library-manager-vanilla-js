@@ -1,0 +1,32 @@
+tr:nth-child(even) {
+  background-color: rgb(239, 237, 237);
+}
+
+.create-new-book {
+  background-color: rgb(13, 232, 210);
+  display: block;
+  color: white;
+  height: 35px;
+  border: none;
+  border-radius: 5%;
+}
+
+tbody th {
+  color: rgb(13, 232, 210);
+}
+
+thead th {
+  text-align: left;
+}
+
+thead tr th {
+  border-bottom: 2px solid goldenrod;
+}
+
+.container {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+
+  margin-left: 20px;
+}
