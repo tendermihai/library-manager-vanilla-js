@@ -30,3 +30,96 @@ thead tr th {
 
   margin-left: 20px;
 }
+
+.create-new-book {
+  margin-top: 10px;
+  height: 35px;
+  background-color: rgb(13, 232, 210);
+  color: white;
+  width: 150px;
+}
+
+.cancel-new-book {
+  height: 35px;
+  background-color: rgb(13, 232, 210);
+  color: white;
+  border: none;
+  width: 80px;
+  margin-top: 10px;
+}
+
+.container-new-book input {
+  display: block;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+.card {
+  display: flex;
+  flex-direction: row;
+
+  justify-content: space-between;
+}
+
+.container-new-book {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+}
+
+.buttons-new-book {
+  display: block;
+  margin-left: auto;
+}
+
+.update-book {
+  background-color: rgb(13, 232, 210);
+  display: block;
+  color: white;
+  height: 35px;
+  border: none;
+  border-radius: 5%;
+  width: 100px;
+  margin-bottom: 10px;
+}
+
+.cancel {
+  background-color: rgb(13, 232, 210);
+  display: block;
+  color: white;
+  height: 35px;
+  width: 70px;
+  border: none;
+  border-radius: 5%;
+  margin-bottom: 10px;
+}
+
+.delete-book {
+  background-color: rgb(13, 232, 210);
+  display: block;
+  color: white;
+  height: 35px;
+  width: 100px;
+  border: none;
+  border-radius: 5%;
+}
+
+.update-buttons {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  margin-left: 115px;
+  padding: 10px;
+}
+
+.card-update {
+  display: flex;
+  flex-direction: row;
+  padding: 5px;
+  justify-content: space-between;
+}
+
+.container-update {
+  width: 300px;
+  height: auto;
+}
