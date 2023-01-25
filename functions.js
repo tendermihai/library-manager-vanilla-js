@@ -1,7 +1,7 @@
 function createHome() {
-  let contaienr = document.querySelector(".container");
+  let container = document.querySelector(".container");
 
-  contaienr.innerHTML = `
+  container.innerHTML = `
     
     <h1>Books</h1>
     <button class="create-new-book">Create New Book</button>
@@ -19,111 +19,8 @@ function createHome() {
         </thead>
 
 
-        <tbody>
-            <tr>
-                <th scope="row">The Hunger Games</th>
-                <td>Suzanne Collins</td>
-                <td>Fantasy</td>
-                <td>2008</td>
-            </tr>
-
-            <tr>
-                <th scope="row">Catching Fire</th>
-                <td>Suzanne Collins</td>
-                <td>Fantasy</td>
-                <td>2009</td>
-            </tr>
-
-            <tr>
-                <th scope="row">Mockingjay</th>
-                <td>Suzanne Collins</td>
-                <td>Fantasy</td>
-                <td>2010</td>
-            </tr>
-
-            <tr>
-                <th scope="row">The Ballad of Songbirds and Snakes</th>
-                <td>Suzanne Collins</td>
-                <td>Fantasy</td>
-                <td>2010</td>
-            </tr>
-
-            <tr>
-                <th scope="row">The Memory Police</th>
-                <td>Yogo Ogawa</td>
-                <td>Science Fiction</td>
-                <td>1994</td>
-            </tr>
-
-            <tr>
-                <th scope="row">Nickel Boys</th>
-                <td>Colson Whitehead</td>
-                <td>Historical Fiction</td>
-                <td>2019</td>
-            </tr>
-
-            <tr>
-                <th scope="row">The Book of Unknown Americans</th>
-                <td>Cristina Henriquez</td>
-                <td>Fiction</td>
-                <td>2014</td>
-            </tr>
-
-            <tr>
-                <th scope="row">A Brief History of Time</th>
-                <td>Stephen Hawking</td>
-                <td>Non Fiction</td>
-                <td>1988</td>
-            </tr>
-
-            <tr>
-                <th scope="row">Armada</th>
-                <td>Ernest Cline</td>
-                <td>Science Fiction</td>
-                <td>2015</td>
-            </tr>
-
-            <tr>
-                <th scope="row">Emma</th>
-                <td>Jane Austen</td>
-                <td>Classic</td>
-                <td>1815</td>
-            </tr>
-
-            <tr>
-                <th scope="row">Frankenstein</th>
-                <td>Mary Shelley</td>
-                <td>Horror</td>
-                <td>1818</td>
-            </tr>
-
-            <tr>
-                <th scope="row">Pride and Prejudice</th>
-                <td>Jane Austen</td>
-                <td>Classic</td>
-                <td>1813</td>
-            </tr>
-
-            <tr>
-                <th scope="row">Ready Player One</th>
-                <td>Ernest Cline</td>
-                <td>Science Fiction</td>
-                <td>2011</td>
-            </tr>
-
-            <tr>
-                <th scope="row">The Martian</th>
-                <td>Andy Weir</td>
-                <td>Science Fiction</td>
-                <td>2014</td>
-            </tr>
-
-            <tr>
-                <th scope="row">The Universe in a Nutshell</th>
-                <td>Stephen Hawking</td>
-                <td>Non Fiction</td>
-                <td>2001</td>
-            </tr>
+        <tbody class="books-container">
+           
 
         </tbody>
 
@@ -132,6 +29,152 @@ function createHome() {
     
     
     
+    
+    `;
+
+  createRows(books);
+
+  let btn = document.querySelector(".create-new-book");
+
+  btn.addEventListener("click", () => {
+    createNewBook();
+  });
+}
+
+function createNewBook() {
+  let container = document.querySelector(".container");
+
+  container.innerHTML = `
+
+    <h1>New Book</h1>
+
+    <div class="container-new-book">
+
+        <section class="card">
+            <label for="title"><b>Title</b></label>
+            <input type="text" name="title" class="title">
+        </section>
+
+        <section class="card">
+            <label for="author"><b>Author</b></label>
+            <input type="text" name="author" class="author">
+        </section>
+
+        <section class="card">
+            <label for="genre"><b>Genre</b></label>
+            <input type="text" name="genre" class="genre">
+        </section>
+
+        <section class="card">
+            <label for="year"><b>Year</b></label>
+            <input type="text" name="year" class="year">
+        </section>
+
+        <section class="buttons-new-book">
+            <button class="create-new-book">Create New Book</button>
+            <button class="cancel-new-book">Cancel</button>
+        </section>
+
+    </div>
+    
+    
+    
+    
+    `;
+
+  let btn = document.querySelector(".create-new-book");
+  let cancelBtn = document.querySelector(".cancel-new-book");
+  let titleInpt = document.querySelector(".title");
+  let authorInpt = document.querySelector(".author");
+  let genreInpt = document.querySelector(".genre");
+  let yearInpt = document.querySelector(".year");
+
+  btn.addEventListener("click", () => {
+    let title = titleInpt.value;
+    let author = authorInpt.value;
+    let genre = genreInpt.value;
+    let year = yearInpt.value;
+
+    let book = {
+      title: titleInpt.value,
+      author: authorInpt.value,
+      genre: genreInpt.value,
+      year: yearInpt.value,
+    };
+
+    books.push(book);
+
+    createHome();
+  });
+
+  cancelBtn.addEventListener("click", () => {
+    createHome();
+  });
+}
+
+function createRow(book) {
+  console.log(book);
+  let tr = document.createElement("tr");
+  let tdauthor = document.createElement("td");
+  let tdgenre = document.createElement("td");
+  let tdyear = document.createElement("td");
+
+  let th = document.createElement("th");
+
+  th.scope = "row";
+  th.textContent = book.title;
+  tr.appendChild(th);
+  tdauthor.textContent = book.author;
+  tr.appendChild(tdauthor);
+
+  tdgenre.textContent = book.genre;
+  tr.appendChild(tdgenre);
+  tdyear.textContent = book.year;
+  tr.appendChild(tdyear);
+
+  return tr;
+}
+
+function createRows(books) {
+  let tbody = document.querySelector(".books-container");
+
+  books.forEach((element) => {
+    tbody.appendChild(createRow(element));
+  });
+}
+
+function createUpdateBook() {
+  let container = document.querySelector(".container");
+  container.innerHTML = `
+    
+    <div class="container-update">
+  
+    <section class="card-update">
+        <label for="title"><b>Title</b></label>
+        <input type="text" name="title" class="title" placeholder="The Hunger Games">
+    </section>
+  
+    <section class="card-update">
+        <label for="author"><b>Author</b></label>
+        <input type="text" name="author" class="author" placeholder="Suzanne Collins">
+    </section>
+  
+    <section class="card-update">
+        <label for="genre"><b>Genre</b></label>
+        <input type="text" name="genre" class="genre" placeholder="Fantasy">
+    </section>
+  
+    <section class="card-update">
+        <label for="year"><b>Year</b></label>
+        <input type="text" name="year" class="year" placeholder="2008">
+    </section>
+  
+    <section class="update-buttons">
+        <button class="update-book">Update Book</button>
+        <button class="cancel">Cancel</button>
+        <button class="delete-book">Delete Book</button>
+    </section>
+  </div>
     
     `;
 }
