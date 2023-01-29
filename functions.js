@@ -35,9 +35,21 @@ function createHome() {
   createRows(books);
 
   let btn = document.querySelector(".create-new-book");
+  let updateBtn = document.querySelector(".update-book");
+  let booksContainer = document.querySelector(".books-container");
 
   btn.addEventListener("click", () => {
     createNewBook();
+  });
+
+  booksContainer.addEventListener("click", (e) => {
+    let obj = e.target;
+    if (obj.classList.contains("title")) {
+      let title = obj.textContent;
+      let book = findBookByTitle(title);
+
+      createUpdateBook(book);
+    }
   });
 }
 
@@ -49,6 +61,11 @@ function createNewBook() {
     <h1>New Book</h1>
 
     <div class="container-new-book">
+
+
+    <section class=error> 
+
+    </section>
 
         <section class="card">
             <label for="title"><b>Title</b></label>
@@ -90,11 +107,6 @@ function createNewBook() {
   let yearInpt = document.querySelector(".year");
 
   btn.addEventListener("click", () => {
-    let title = titleInpt.value;
-    let author = authorInpt.value;
-    let genre = genreInpt.value;
-    let year = yearInpt.value;
-
     let book = {
       title: titleInpt.value,
       author: authorInpt.value,
@@ -102,9 +114,18 @@ function createNewBook() {
       year: yearInpt.value,
     };
 
-    books.push(book);
+    if (
+      book.title == "" ||
+      book.author == "" ||
+      book.genre == "" ||
+      book.year == ""
+    ) {
+      attachErrors(book);
+    } else {
+      books.push(book);
 
-    createHome();
+      createHome();
+    }
   });
 
   cancelBtn.addEventListener("click", () => {
@@ -123,6 +144,7 @@ function createRow(book) {
 
   th.scope = "row";
   th.textContent = book.title;
+  th.classList.add("title");
   tr.appendChild(th);
   tdauthor.textContent = book.author;
   tr.appendChild(tdauthor);
@@ -143,38 +165,156 @@ function createRows(books) {
   });
 }
 
-function createUpdateBook() {
+// let container = document.querySelector(".container-update");
+// document.addEventListener("DOMContentLoaded", function () {
+//   createUpdateBook(book);
+// });
+
+function createUpdateBook(book) {
   let container = document.querySelector(".container");
   container.innerHTML = `
     
-    <div class="container-update">
-  
-    <section class="card-update">
-        <label for="title"><b>Title</b></label>
-        <input type="text" name="title" class="title" placeholder="The Hunger Games">
-    </section>
-  
-    <section class="card-update">
-        <label for="author"><b>Author</b></label>
-        <input type="text" name="author" class="author" placeholder="Suzanne Collins">
-    </section>
-  
-    <section class="card-update">
-        <label for="genre"><b>Genre</b></label>
-        <input type="text" name="genre" class="genre" placeholder="Fantasy">
-    </section>
-  
-    <section class="card-update">
-        <label for="year"><b>Year</b></label>
-        <input type="text" name="year" class="year" placeholder="2008">
-    </section>
-  
-    <section class="update-buttons">
-        <button class="update-book">Update Book</button>
-        <button class="cancel">Cancel</button>
-        <button class="delete-book">Delete Book</button>
-    </section>
-  </div>
+  <div class="container-update">
+
+  <section class="card-update">
+      <label for="title"><b>Title</b></label>
+      <input type="text" name="title" class="title" disabled  placeholder="${book.title}">
+  </section>
+
+  <section class="card-update">
+      <label for="author"><b>Author</b></label>
+      <input type="text" name="author" class="author" placeholder="${book.author}">
+  </section>
+
+  <section class="card-update">
+      <label for="genre"><b>Genre</b></label>
+      <input type="text" name="genre" class="genre" placeholder="${book.genre}">
+  </section>
+
+  <section class="card-update">
+      <label for="year"><b>Year</b></label>
+      <input type="text" name="year" class="year" placeholder="${book.year}">
+  </section>
+
+  <section class="update-buttons">
+      <button class="update-book">Update Book</button>
+      <button class="cancel">Cancel</button>
+      <button class="delete-book">Delete Book</button>
+  </section>
+</div>
     
     `;
+
+  let titleInpt = document.querySelector(".title");
+  let authorInpt = document.querySelector(".author");
+  let genreInpt = document.querySelector(".genre");
+  let yearInpt = document.querySelector(".year");
+
+  let cancelBtn = document.querySelector(".cancel");
+  let btnUpd = document.querySelector(".update-book");
+  let delBtn = document.querySelector(".delete-book");
+  btnUpd.addEventListener("click", () => {
+    if (authorInpt.value !== "") {
+      book.author = authorInpt.value;
+    }
+
+    if (genreInpt.value !== "") {
+      book.genre = genreInpt.value;
+    }
+
+    if (yearInpt.value !== "") {
+      book.year = yearInpt.value;
+    }
+
+    updateBooks(book);
+
+    createHome();
+  });
+
+  cancelBtn.addEventListener("click", () => {
+    createHome();
+  });
+
+  delBtn.addEventListener("click", () => {
+    console.log("press");
+    deleteByTitle();
+  });
+}
+
+function findBookByTitle(title) {
+  return books.filter((e) => e.title == title)[0];
+}
+
+function deleteByTitle(title) {
+  filter = [];
+  for (let title = 0; title.length < title; title++) {
+    if (title !== title) filter.push(title);
+  }
+  return filter;
+}
+
+function updateBooks(arr, book) {
+  for (let i = 0; i < arr.length; i++) {
+    if (book.title == arr[i].title) {
+      arr[i] = book;
+    }
+  }
+}
+
+function attachErrors(book) {
+  let section = document.querySelector(".error");
+
+  section.innerHTML = "";
+
+  let h1 = document.createElement("h1");
+  h1.textContent = "Ooopssss!";
+  section.appendChild(h1);
+
+  let title = document.querySelector(".title");
+  let author = document.querySelector(".author");
+  let genre = document.querySelector(".genre");
+  let year = document.querySelector(".year");
+
+  if (book.title == "") {
+    section.appendChild(createError("Title is required"));
+    title.classList.add("err");
+  }
+
+  // for (let i = 0; i < books.length; i++) {
+  //   if (book.title == books.title) {
+  //     section.appendChild(createError("You can't enter the same title"));
+  //     title.classList.add("err");
+  //   }
+  // }
+
+  if (findBookByTitle(book.title)!==undefined) {
+    section.appendChild(createError("You can't enter the same title"));
+    title.classList.add("err");
+  }
+
+  if (book.author == "") {
+    section.appendChild(createError("Author is required"));
+    author.classList.add("err");
+  }
+
+  if (book.genre == "") {
+    section.appendChild(createError("Genre is requried"));
+    genre.classList.add("err");
+  }
+
+  if (book.year == "") {
+    section.appendChild(createError("Year is required"));
+    year.classList.add("err");
+  } else if (+book.year === NaN) {
+    section.appendChild(createError("Please enter numbers"));
+    year.classList.add("err");
+  }
+}
+
+function createError(text) {
+  let p = document.createElement("p");
+
+  p.textContent = text;
+
+  return p;
 }
