@@ -15,6 +15,10 @@ tbody th {
   color: rgb(13, 232, 210);
 }
 
+tr {
+  cursor: pointer;
+}
+
 thead th {
   text-align: left;
 }
@@ -128,4 +132,16 @@ thead tr th {
 
 input {
   padding: 10px;
+}
+
+.error h1 {
+  color: red;
+}
+
+.error p {
+  color: red;
+}
+
+.err {
+  border: 2px solid red;
 }
