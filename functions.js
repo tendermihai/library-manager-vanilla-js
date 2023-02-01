@@ -37,6 +37,7 @@ function createHome() {
   let btn = document.querySelector(".create-new-book");
   let updateBtn = document.querySelector(".update-book");
   let booksContainer = document.querySelector(".books-container");
+  let delBtn = document.querySelector(".delete-book");
 
   btn.addEventListener("click", () => {
     createNewBook();
@@ -118,7 +119,8 @@ function createNewBook() {
       book.title == "" ||
       book.author == "" ||
       book.genre == "" ||
-      book.year == ""
+      book.year == "" ||
+      isNaN(+book.year)
     ) {
       attachErrors(book);
     } else {
@@ -174,7 +176,27 @@ function createUpdateBook(book) {
   let container = document.querySelector(".container");
   container.innerHTML = `
     
-  <div class="container-update">
+   <div class="container-update">
+
+   
+  <h1>Update Book</h1>
+  <section class="error">
+
+      <!-- <h1>Oooops!</h1>
+      <p>Title is required</p>
+      <p>Author is required</p> -->
+
+  </section>
+
+
+  
+  <section class="error">
+
+  <!-- <h1>Oooops!</h1>
+  <p>Title is required</p>
+  <p>Author is required</p> -->
+
+  </section>
 
   <section class="card-update">
       <label for="title"><b>Title</b></label>
@@ -202,10 +224,10 @@ function createUpdateBook(book) {
       <button class="delete-book">Delete Book</button>
   </section>
 </div>
-    
+</div>
     `;
 
-  let titleInpt = document.querySelector(".title");
+  let title = document.querySelector(".title");
   let authorInpt = document.querySelector(".author");
   let genreInpt = document.querySelector(".genre");
   let yearInpt = document.querySelector(".year");
@@ -214,21 +236,21 @@ function createUpdateBook(book) {
   let btnUpd = document.querySelector(".update-book");
   let delBtn = document.querySelector(".delete-book");
   btnUpd.addEventListener("click", () => {
-    if (authorInpt.value !== "") {
-      book.author = authorInpt.value;
+    book.author = authorInpt.value;
+    book.genre = genreInpt.value;
+    book.year = yearInpt.value;
+
+    if (
+      book.author == "" ||
+      book.genre == "" ||
+      book.year == "" ||
+      isNaN(+book.year)
+    ) {
+      attachErrorsUpdate(book);
+    } else {
+      updateBooks(book);
+      createHome();
     }
-
-    if (genreInpt.value !== "") {
-      book.genre = genreInpt.value;
-    }
-
-    if (yearInpt.value !== "") {
-      book.year = yearInpt.value;
-    }
-
-    updateBooks(book);
-
-    createHome();
   });
 
   cancelBtn.addEventListener("click", () => {
@@ -236,8 +258,8 @@ function createUpdateBook(book) {
   });
 
   delBtn.addEventListener("click", () => {
-    console.log("press");
-    deleteByTitle();
+    books = deleteByTitle(books, book.title);
+    createHome();
   });
 }
 
@@ -245,10 +267,12 @@ function findBookByTitle(title) {
   return books.filter((e) => e.title == title)[0];
 }
 
-function deleteByTitle(title) {
-  filter = [];
-  for (let title = 0; title.length < title; title++) {
-    if (title !== title) filter.push(title);
+function deleteByTitle(arr, title) {
+  let filter = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].title !== title) {
+      filter.push(arr[i]);
+    }
   }
   return filter;
 }
@@ -287,7 +311,7 @@ function attachErrors(book) {
   //   }
   // }
 
-  if (findBookByTitle(book.title)!==undefined) {
+  if (findBookByTitle(book.title) !== undefined) {
     section.appendChild(createError("You can't enter the same title"));
     title.classList.add("err");
   }
@@ -301,12 +325,12 @@ function attachErrors(book) {
     section.appendChild(createError("Genre is requried"));
     genre.classList.add("err");
   }
-
-  if (book.year == "") {
-    section.appendChild(createError("Year is required"));
-    year.classList.add("err");
-  } else if (+book.year === NaN) {
+  if (isNaN(+book.year)) {
+    console.log(isNaN(+book.year));
     section.appendChild(createError("Please enter numbers"));
+    year.classList.add("err");
+  } else if (book.year == "") {
+    section.appendChild(createError("Year is required"));
     year.classList.add("err");
   }
 }
@@ -317,4 +341,32 @@ function createError(text) {
   p.textContent = text;
 
   return p;
+}
+
+function attachErrorsUpdate(book) {
+
+  let author = document.querySelector(".author");
+  let genre = document.querySelector(".genre");
+  let year = document.querySelector(".year");
+  
+  let section = document.querySelector(".error");
+
+  section.innerHTML = "";
+
+  if (book.author == "") {
+    section.appendChild(createError("Author is required"));
+    author.classList.add("err");
+  }
+
+  if (book.genre == "") {
+    section.appendChild(createError("Genre is requried"));
+    genre.classList.add("err");
+  }
+  if (isNaN(+book.year)) {
+    section.appendChild(createError("Please enter numbers"));
+    year.classList.add("err");
+  } else if (book.year == "") {
+    section.appendChild(createError("Year is required"));
+    year.classList.add("err");
+  }
 }
