@@ -10,11 +10,11 @@ function createHome() {
 
 
         <thead>
-            <tr>
-                <th scope="col">Title</th>
-                <th scope="col">Author</th>
-                <th scope="col">Genre</th>
-                <th scope="col">Year</th>
+            <tr class="columns">
+                <th scope="col" class="title-column">Title</th>
+                <th scope="col" class="author-column">Author</th>
+                <th scope="col" class="genre-column">Genre</th>
+                <th scope="col" class="year-column">Year</th>
             </tr>
         </thead>
 
@@ -34,24 +34,50 @@ function createHome() {
 
   createRows(books);
 
-  let btn = document.querySelector(".create-new-book");
-  let updateBtn = document.querySelector(".update-book");
-  let booksContainer = document.querySelector(".books-container");
-  let delBtn = document.querySelector(".delete-book");
+  window.onload = function () {
+    let btn = document.querySelector(".create-new-book");
+    let updateBtn = document.querySelector(".update-book");
+    let booksContainer = document.querySelector(".books-container");
+    let delBtn = document.querySelector(".delete-book");
+    let columns = document.querySelector(".columns");
+    let author = document.querySelector(".author-column");
+    let genre = document.querySelector(".genre-column");
+    let year = document.querySelector(".year-column");
 
-  btn.addEventListener("click", () => {
-    createNewBook();
-  });
+    btn.addEventListener("click", () => {
+      createNewBook();
+    });
 
-  booksContainer.addEventListener("click", (e) => {
-    let obj = e.target;
-    if (obj.classList.contains("title")) {
-      let title = obj.textContent;
-      let book = findBookByTitle(title);
+    booksContainer.addEventListener("click", (e) => {
+      let obj = e.target;
+      if (obj.classList.contains("title")) {
+        let title = obj.textContent;
+        let book = findBookByTitle(title);
 
-      createUpdateBook(book);
-    }
-  });
+        createUpdateBook(book);
+      }
+    });
+
+    columns.addEventListener("click", (e) => {
+      let obj = e.target;
+
+      if (obj.classList.contains("author-column")) {
+        console.log("author");
+        sortByAuthor(author);
+      }
+
+      if (obj.classList.contains("genre-column")) {
+        console.log("genre");
+        sortByGenre(genre);
+      }
+
+      if (obj.classList.contains("year-column")) {
+        console.log("year");
+        sortByYear(year);
+      }
+      createRows(books);
+    });
+  };
 }
 
 function createNewBook() {
@@ -161,7 +187,7 @@ function createRow(book) {
 
 function createRows(books) {
   let tbody = document.querySelector(".books-container");
-
+  tbody.innerHTML = "";
   books.forEach((element) => {
     tbody.appendChild(createRow(element));
   });
@@ -344,11 +370,10 @@ function createError(text) {
 }
 
 function attachErrorsUpdate(book) {
-
   let author = document.querySelector(".author");
   let genre = document.querySelector(".genre");
   let year = document.querySelector(".year");
-  
+
   let section = document.querySelector(".error");
 
   section.innerHTML = "";
@@ -369,4 +394,40 @@ function attachErrorsUpdate(book) {
     section.appendChild(createError("Year is required"));
     year.classList.add("err");
   }
+}
+
+function sortByAuthor() {
+  books.sort((a, b) => {
+    if (a.author < b.author) {
+      return -1;
+    } else if (a.author > b.author) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
+}
+
+function sortByGenre() {
+  books.sort((a, b) => {
+    if (a.genre < b.genre) {
+      return -1;
+    } else if (a.genre > b.genre) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
+}
+
+function sortByYear() {
+  books.sort((a, b) => {
+    if (a.year < b.year) {
+      return -1;
+    } else if (a.year > b.year) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
 }
