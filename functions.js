@@ -34,50 +34,46 @@ function createHome() {
 
   createRows(books);
 
-  window.onload = function () {
-    let btn = document.querySelector(".create-new-book");
-    let updateBtn = document.querySelector(".update-book");
-    let booksContainer = document.querySelector(".books-container");
-    let delBtn = document.querySelector(".delete-book");
-    let columns = document.querySelector(".columns");
-    let author = document.querySelector(".author-column");
-    let genre = document.querySelector(".genre-column");
-    let year = document.querySelector(".year-column");
+  let btn = document.querySelector(".create-new-book");
+  let booksContainer = document.querySelector(".books-container");
+  let columns = document.querySelector(".columns");
+  let author = document.querySelector(".author-column");
+  let genre = document.querySelector(".genre-column");
+  let year = document.querySelector(".year-column");
 
-    btn.addEventListener("click", () => {
-      createNewBook();
-    });
+  btn.addEventListener("click", () => {
+    createNewBook();
+  });
 
-    booksContainer.addEventListener("click", (e) => {
-      let obj = e.target;
-      if (obj.classList.contains("title")) {
-        let title = obj.textContent;
-        let book = findBookByTitle(title);
+  booksContainer.addEventListener("click", (e) => {
+    let obj = e.target;
+    if (obj.classList.contains("title")) {
+      let title = obj.textContent;
+      let book = findBookByTitle(title);
 
-        createUpdateBook(book);
-      }
-    });
+      createUpdateBook(book);
+    }
+  });
 
-    columns.addEventListener("click", (e) => {
-      let obj = e.target;
+  columns.addEventListener("click", (e) => {
+    let obj = e.target;
 
-      if (obj.classList.contains("author-column")) {
-        console.log("author");
-        sortByAuthor(author);
-      }
+    if (obj.classList.contains("author-column")) {
+      console.log("author");
+      sortByAuthor(author);
+    }
 
-      if (obj.classList.contains("genre-column")) {
-        console.log("genre");
-        sortByGenre(genre);
-      }
+    if (obj.classList.contains("genre-column")) {
+      console.log("genre");
+      sortByGenre(genre);
+    }
 
-      if (obj.classList.contains("year-column")) {
-        console.log("year");
-        sortByYear(year);
-      }
-      createRows(books);
-    });
-  };
+    if (obj.classList.contains("year-column")) {
+      console.log("year");
+      sortByYear(year);
+    }
+    createRows(books);
+  });
 }
 
 function createNewBook() {
@@ -162,7 +158,6 @@ function createNewBook() {
 }
 
 function createRow(book) {
-  console.log(book);
   let tr = document.createElement("tr");
   let tdauthor = document.createElement("td");
   let tdgenre = document.createElement("td");
